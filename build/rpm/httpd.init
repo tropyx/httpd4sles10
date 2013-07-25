@@ -117,8 +117,8 @@
 
 # Check for missing binaries (stale symlinks should not happen)
 # Note: Special treatment of stop for LSB conformance
-FOO_BIN=/usr/sbin/FOO
-test -x $FOO_BIN || { echo "$FOO_BIN not installed"; 
+HTTPD_BIN=/usr/sbin/FOO
+test -x $HTTPD_BIN || { echo "$HTTPD_BIN not installed"; 
 	if [ "$1" = "stop" ]; then exit 0;
 	else exit 5; fi; }
 
@@ -262,7 +262,7 @@ case "$1" in
 	echo -n "Starting FOO "
 	## Start daemon with startproc(8). If this fails
 	## the return value is set appropriately by startproc.
-	start_daemon $FOO_BIN
+	start_daemon $HTTPD_BIN
 
 	# Remember status and be verbose
 	rc_status -v
@@ -272,7 +272,7 @@ case "$1" in
 	## Stop daemon with killproc(8) and if this fails
 	## killproc sets the return value according to LSB.
 
-	killproc -TERM $FOO_BIN
+	killproc -TERM $HTTPD_BIN
 
 	# Remember status and be verbose
 	rc_status -v
@@ -310,7 +310,7 @@ case "$1" in
 
 	echo -n "Reload service FOO "
 	## if it supports it:
-	killproc -HUP $FOO_BIN
+	killproc -HUP $HTTPD_BIN
 	#touch /var/run/FOO.pid
 	rc_status -v
 
@@ -324,7 +324,7 @@ case "$1" in
 
 	# If it supports signaling:
 	echo -n "Reload service FOO "
-	killproc -HUP $FOO_BIN
+	killproc -HUP $HTTPD_BIN
 	#touch /var/run/FOO.pid
 	rc_status -v
 	
@@ -346,7 +346,7 @@ case "$1" in
 	# 5--199 reserved (5--99 LSB, 100--149 distro, 150--199 appl.)
 	
 	# NOTE: checkproc returns LSB compliant status values.
-	checkproc $FOO_BIN
+	checkproc $HTTPD_BIN
 	# NOTE: rc_status knows that we called this init script with
 	# "status" option and adapts its messages accordingly.
 	rc_status -v
